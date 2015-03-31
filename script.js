@@ -22,7 +22,13 @@
                 var valid = validate(balanceVal, addVal);
 
                 if (valid) {
-                    formSubmit(balanceVal, addVal);
+                    
+                    if (multipleFive(addVal)) {
+                        formSubmit(balanceVal, addVal);
+                    } else {
+                        errorMsg("refill only with multiples of $0.05 cents");
+                    }
+
                 } else {
                     errorMsg("add $5.50 or more for a 11% bonus!");
                 }
@@ -150,6 +156,12 @@
 
         return ret;
 
+    }
+
+    function multipleFive(val) {
+        var dec = (val % 1).toFixed(2),
+            last = parseInt(dec.charAt(dec.length - 1), 10);
+        return (last === 5 || last === 0) ? true : false
     }
 
 }(jQuery));
